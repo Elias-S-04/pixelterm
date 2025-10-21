@@ -1,4 +1,4 @@
-# pixelterm/renderer.py (only the two methods below)
+# pixelterm/renderer.py
 import sys, shutil, math
 from .colors import rgb_to_ansi
 

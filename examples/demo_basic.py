@@ -1,4 +1,4 @@
-from pixelterm import PixelRenderer  # Import from main package, not submodule
+from pixelterm import PixelRenderer
 import time
 
 r = PixelRenderer(50, 50)
