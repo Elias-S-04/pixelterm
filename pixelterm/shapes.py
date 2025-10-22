@@ -62,12 +62,4 @@ def _draw_filled_circle_lines(renderer, cx, cy, x, y, color):
         renderer.set_pixel(xi, cy + x, color)
         renderer.set_pixel(xi, cy - x, color)
 
-    """Helper for plotting all 8 symmetric points of a circle."""
-    renderer.set_pixel(cx + x, cy + y, color)
-    renderer.set_pixel(cx - x, cy + y, color)
-    renderer.set_pixel(cx + x, cy - y, color)
-    renderer.set_pixel(cx - x, cy - y, color)
-    renderer.set_pixel(cx + y, cy + x, color)
-    renderer.set_pixel(cx - y, cy + x, color)
-    renderer.set_pixel(cx + y, cy - x, color)
-    renderer.set_pixel(cx - y, cy - x, color)
+    
