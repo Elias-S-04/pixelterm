@@ -12,15 +12,10 @@ class PixelRenderer:
         width (int): Width in pixels (default: 64)
         height (int): Height in pixels (default: 32)
         cell (str): Character(s) to use for each pixel (default: "██")
-    
-    Example:
-        >>> r = PixelRenderer(32, 16)
-        >>> r.set_pixel(0, 0, (255, 0, 0))  # Red pixel at top-left
-        >>> r.render()
-        >>> r.cleanup()
+        use_alt_screen (bool): Use alternate screen buffer for animations (default: False)
     """
     
-    def __init__(self, width=64, height=32, cell="██"):
+    def __init__(self, width=64, height=32, cell="██", use_alt_screen=False):
         self.width = width
         self.height = height
         self.buffer = [["UNSET" for _ in range(width)] for _ in range(height)]
@@ -28,6 +23,9 @@ class PixelRenderer:
         self.cell = cell
         self.background_color = (0, 0, 0)
         self._background_enabled = False
+        self.use_alt_screen = use_alt_screen
+        self._in_alt_screen = False
+        self._frame_count = 0
 
     def set_background(self, color):
         """Set background color and clear buffer to that color."""
@@ -47,15 +45,9 @@ class PixelRenderer:
         if 0 <= x < self.width and 0 <= y < self.height:
             self.buffer[y][x] = color
 
-    def render(self):
-        """Render the pixel buffer to terminal."""
-        if self._first_render:
-            sys.stdout.write("\033[?1049h\033[?25l\033[?7l")
-            self._first_render = False
-
-        sys.stdout.write("\033[H")
+    def _render_frame_to_string(self):
+        """Render current frame to a string."""
         frame_lines = []
-
         for y in range(self.height):
             row = self.buffer[y]
             line_parts = []
@@ -71,12 +63,47 @@ class PixelRenderer:
                     r, g, b = pixel
                     line_parts.append(f"{rgb_to_ansi(r,g,b)}{self.cell}")
             frame_lines.append(''.join(line_parts) + "\033[0m")
+        return "\n".join(frame_lines)
 
-        frame = "\n".join(frame_lines)
+    def render(self):
+        """Render the pixel buffer to terminal."""
+        if self._first_render:
+            if self.use_alt_screen:
+                sys.stdout.write("\033[?1049h\033[?25l\033[?7l")
+                self._in_alt_screen = True
+            else:
+                sys.stdout.write("\033[?25l")
+            self._first_render = False
+        
+        if self._in_alt_screen:
+            sys.stdout.write("\033[H")
+        elif self._frame_count > 0:
+            sys.stdout.write(f"\033[{self.height}A")
+        
+        # Render the frame
+        frame = self._render_frame_to_string()
         sys.stdout.write(frame)
+        
+        if not self._in_alt_screen:
+            # In inline mode, add newline after each frame
+            sys.stdout.write("\n")
+        
         sys.stdout.flush()
+        self._frame_count += 1
 
-    def cleanup(self):
-        """Restore terminal state."""
-        sys.stdout.write("\033[0m\033[?7h\033[?25h\033[?1049l\n")
+    def cleanup(self, preserve_final_frame=True):
+        
+        if self._in_alt_screen and preserve_final_frame:
+            sys.stdout.write("\033[?1049l")
+            self._in_alt_screen = False
+            
+            sys.stdout.write("\033[?25l")
+            final_frame = self._render_frame_to_string()
+            sys.stdout.write(final_frame)
+            sys.stdout.write("\n\033[?25h")
+        elif self._in_alt_screen:
+            sys.stdout.write("\033[0m\033[?7h\033[?25h\033[?1049l")
+        else:
+            sys.stdout.write("\033[?25h")
+        
         sys.stdout.flush()

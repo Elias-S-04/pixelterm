@@ -138,10 +138,6 @@ def show_github_heatmap(username, dark=True):
     Args:
         username (str): GitHub username
         dark (bool): Use dark theme (default: True)
-    
-    Example:
-        >>> show_github_heatmap("octocat")
-        >>> show_github_heatmap("username", dark=False)  # Light theme
     """
     token = get_github_token()
     if not token:
@@ -156,8 +152,13 @@ def show_github_heatmap(username, dark=True):
         start_date = calendar_grid[0][0]
         end_date = calendar_grid[-1][-1]
         
-        # Get data
+        # Fetch data
         calendar_data = _fetch_contribution_data(username, token, start_date, end_date)
+        
+        # Show info before rendering
+        total_contributions = calendar_data['totalContributions']
+        theme_name = 'Dark' if dark else 'Light'
+        print(f"@{username} - {total_contributions} contributions ({theme_name} theme)")
         
         # Process contributions
         theme_colors = _get_theme_colors(dark)
@@ -174,7 +175,7 @@ def show_github_heatmap(username, dark=True):
         
         # Render heatmap
         today = datetime.date.today()
-        r = PixelRenderer(width=53, height=7, cell="██")
+        r = PixelRenderer(width=53, height=7, cell="██", use_alt_screen=True)
         
         try:
             for week_idx, week in enumerate(calendar_grid):
@@ -194,13 +195,9 @@ def show_github_heatmap(username, dark=True):
                             r.set_pixel(week_idx, day_idx, rgb_color)
             
             r.render()
-            print(f"\nGitHub contribution heatmap for @{username}")
-            print(f"Theme: {'Dark' if dark else 'Light'}")
-            print(f"Total contributions: {calendar_data['totalContributions']}")
-            input("Press ENTER to exit...")
             
         finally:
-            r.cleanup()
+            r.cleanup(preserve_final_frame=True)
             
     except Exception as e:
         print(f"Error: {e}")

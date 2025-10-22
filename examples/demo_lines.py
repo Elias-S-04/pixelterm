@@ -25,6 +25,5 @@ try:
         draw_line(r, center_x, center_y, x2, y2, color)
 
     r.render()
-    time.sleep(5)
 finally:
     r.cleanup()

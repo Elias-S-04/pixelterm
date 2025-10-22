@@ -1,7 +1,7 @@
 from pixelterm.renderer import PixelRenderer
 import time, math
 
-r = PixelRenderer(64, 32)
+r = PixelRenderer(64, 32, use_alt_screen=True)
 try:
     for i in range(100):
         for y in range(r.height):

@@ -1,10 +1,9 @@
 from pixelterm import PixelRenderer, draw_rectangle
 import time
 
-r = PixelRenderer(64, 32)
+r = PixelRenderer(32, 16)
 try:
-    draw_rectangle(r, 10, 5, 50, 25, (255, 0, 0), filled=True)
+    draw_rectangle(r, 10, 5, 22, 11, (255, 0, 0), filled=True)
     r.render()
-    time.sleep(5)
 finally:
     r.cleanup()
