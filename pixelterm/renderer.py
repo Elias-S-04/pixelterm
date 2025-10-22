@@ -62,7 +62,7 @@ class PixelRenderer:
                 else:
                     r, g, b = pixel
                     line_parts.append(f"{rgb_to_ansi(r,g,b)}{self.cell}")
-            frame_lines.append(''.join(line_parts) + "\033[0m")
+            frame_lines.append(''.join(line_parts) + "\033[0m ")
         return "\n".join(frame_lines)
 
     def render(self):
@@ -80,23 +80,20 @@ class PixelRenderer:
         elif self._frame_count > 0:
             sys.stdout.write(f"\033[{self.height}A")
         
-        # Render the frame
         frame = self._render_frame_to_string()
         sys.stdout.write(frame)
         
         if not self._in_alt_screen:
-            # In inline mode, add newline after each frame
             sys.stdout.write("\n")
         
         sys.stdout.flush()
         self._frame_count += 1
 
     def cleanup(self, preserve_final_frame=True):
-        
+        """Restore terminal state."""
         if self._in_alt_screen and preserve_final_frame:
             sys.stdout.write("\033[?1049l")
             self._in_alt_screen = False
-            
             sys.stdout.write("\033[?25l")
             final_frame = self._render_frame_to_string()
             sys.stdout.write(final_frame)

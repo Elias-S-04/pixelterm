@@ -1,7 +1,9 @@
 from pixelterm.githubmap import show_github_heatmap
 
 # Dark mode (Default)
-show_github_heatmap("Elias-S-04")
+show_github_heatmap("Elias-s-04")
 
-# Light mode
-#show_github_heatmap("Elias-S-04", dark=False)
+print()  # Simple separator
+
+# Light mode  
+show_github_heatmap("Elias-s-04", dark=False)
