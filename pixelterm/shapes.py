@@ -20,26 +20,54 @@ def draw_line(renderer, x1, y1, x2, y2, color):
             err += dx
             y1 += sy
 
-def draw_circle(renderer, cx, cy, radius, color):
-    """Draw a simple circle using the Midpoint circle algorithm."""
-    x = radius
-    y = 0
-    err = 0
+def draw_circle(renderer, cx, cy, radius, color, filled=False):
+    """
+    Draw a circle using Bresenham's circle algorithm.
+    If filled=True, fills the circle by drawing horizontal lines between edges.
+    """
+    x = 0
+    y = radius
+    d = 3 - 2 * radius
 
-    while x >= y:
-        renderer.set_pixel(cx + x, cy + y, color)
-        renderer.set_pixel(cx + y, cy + x, color)
-        renderer.set_pixel(cx - y, cy + x, color)
-        renderer.set_pixel(cx - x, cy + y, color)
-        renderer.set_pixel(cx - x, cy - y, color)
-        renderer.set_pixel(cx - y, cy - x, color)
-        renderer.set_pixel(cx + y, cy - x, color)
-        renderer.set_pixel(cx + x, cy - y, color)
+    while y >= x:
+        if filled:
+            # Fill between symmetric points
+            _draw_filled_circle_lines(renderer, cx, cy, x, y, color)
+        else:
+            # Outline only
+            renderer.set_pixel(cx + x, cy + y, color)
+            renderer.set_pixel(cx - x, cy + y, color)
+            renderer.set_pixel(cx + x, cy - y, color)
+            renderer.set_pixel(cx - x, cy - y, color)
+            renderer.set_pixel(cx + y, cy + x, color)
+            renderer.set_pixel(cx - y, cy + x, color)
+            renderer.set_pixel(cx + y, cy - x, color)
+            renderer.set_pixel(cx - y, cy - x, color)
 
-        if err <= 0:
-            y += 1
-            err += 2 * y + 1
+        # Bresenham update
+        x += 1
+        if d > 0:
+            y -= 1
+            d += 4 * (x - y) + 10
+        else:
+            d += 4 * x + 6
 
-        if err > 0:
-            x -= 1
-            err -= 2 * x + 1
+
+def _draw_filled_circle_lines(renderer, cx, cy, x, y, color):
+    """Helper: draw horizontal spans between circle edges for filling."""
+    for xi in range(cx - x, cx + x + 1):
+        renderer.set_pixel(xi, cy + y, color)
+        renderer.set_pixel(xi, cy - y, color)
+    for xi in range(cx - y, cx + y + 1):
+        renderer.set_pixel(xi, cy + x, color)
+        renderer.set_pixel(xi, cy - x, color)
+
+    """Helper for plotting all 8 symmetric points of a circle."""
+    renderer.set_pixel(cx + x, cy + y, color)
+    renderer.set_pixel(cx - x, cy + y, color)
+    renderer.set_pixel(cx + x, cy - y, color)
+    renderer.set_pixel(cx - x, cy - y, color)
+    renderer.set_pixel(cx + y, cy + x, color)
+    renderer.set_pixel(cx - y, cy + x, color)
+    renderer.set_pixel(cx + y, cy - x, color)
+    renderer.set_pixel(cx - y, cy - x, color)
