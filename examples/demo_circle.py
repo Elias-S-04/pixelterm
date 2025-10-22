@@ -1,5 +1,4 @@
-from pixelterm import PixelRenderer
-from pixelterm.shapes import draw_circle
+from pixelterm import PixelRenderer, draw_circle
 import time
 
 r = PixelRenderer(60, 30)

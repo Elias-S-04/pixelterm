@@ -63,3 +63,16 @@ def _draw_filled_circle_lines(renderer, cx, cy, x, y, color):
         renderer.set_pixel(xi, cy - x, color)
 
     
+def draw_rectangle(renderer, x1, y1, x2, y2, color, filled=False):
+    """Draw a rectangle from (x1, y1) to (x2, y2)."""
+    if filled:
+        for y in range(y1, y2 + 1):
+            for x in range(x1, x2 + 1):
+                renderer.set_pixel(x, y, color)
+    else:
+        for x in range(x1, x2 + 1):
+            renderer.set_pixel(x, y1, color)
+            renderer.set_pixel(x, y2, color)
+        for y in range(y1, y2 + 1):
+            renderer.set_pixel(x1, y, color)
+            renderer.set_pixel(x2, y, color)
