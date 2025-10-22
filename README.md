@@ -3,7 +3,7 @@
 **pixelterm** is a lightweight Python library that lets you draw and animate colorful pixel art directly in the terminal.
 It supports per-pixel color rendering using ANSI escape codes, shape drawing (lines, circles, rectangles), and smooth frame updates with no flicker.
 
-🧠 Think of it like pygame, but for your terminal window — powered by pixels made of Unicode blocks!
+Think of it like pygame, but for your terminal window — powered by pixels made of Unicode blocks!
 
 - Features
 
