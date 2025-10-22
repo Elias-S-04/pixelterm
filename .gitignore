@@ -1,10 +1,27 @@
-__pycache__/
+# Virtual environments
 .venv/
+env/
+venv/
+
+# Byte-compiled / cache
+__pycache__/
 *.pyc
-*-info/
-dist/
-build/
-.env/
-.envrc
-.ipynb_checkpoints/
+*.pyo
+*.pyd
+
+# VS Code / IDE files
 .vscode/
+.idea/
+
+# Build & packaging
+build/
+dist/
+*.egg-info/
+
+# Logs and test output
+*.log
+*.out
+
+# OS files
+.DS_Store
+Thumbs.db
