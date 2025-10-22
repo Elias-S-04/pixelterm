@@ -1,1 +1,3 @@
 Pillow>=10.0.0
+# Main package dependencies
+requests>=2.25.0

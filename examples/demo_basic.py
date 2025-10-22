@@ -1,7 +1,7 @@
 from pixelterm.renderer import PixelRenderer
 import time, math
 
-r = PixelRenderer(40, 20)
+r = PixelRenderer(64, 32)
 try:
     for i in range(100):
         for y in range(r.height):

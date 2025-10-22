@@ -4,7 +4,7 @@ import time
 r = PixelRenderer(60, 30)
 try:
     for rad in range(5, 15, 3):
-        draw_circle(r, r.width // 2, r.height // 2, rad, (150, 200 - rad*5, 255), filled=False)
+        draw_circle(r, r.width // 2, r.height // 2, rad, (150, 200 - rad*5, 255), filled=True)
     r.render()
     time.sleep(5)
 finally:

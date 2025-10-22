@@ -1,6 +1,6 @@
 # pixelterm/colors.py
 def rgb_to_ansi(r, g, b):
-    """Convert an RGB tuple to an ANSI escape color string."""
+    # Convert an RGB tuple to an ANSI escape color string.
     return f"\033[38;2;{r};{g};{b}m"
 
 COLORS = {

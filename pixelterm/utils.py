@@ -1,4 +1,3 @@
-# pixelterm/utils.py
 import time, random
 
 def sleep_frame(fps=30):

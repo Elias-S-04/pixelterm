@@ -1,6 +1,7 @@
-# pixelterm/shapes.py
+"""Shape drawing functions for PixelRenderer."""
+
 def draw_line(renderer, x1, y1, x2, y2, color):
-    """Draw a simple line using Bresenham's algorithm."""
+    # Draw a simple line using Bresenham's algorithm.
     dx = abs(x2 - x1)
     dy = abs(y2 - y1)
     sx = 1 if x1 < x2 else -1
@@ -20,11 +21,10 @@ def draw_line(renderer, x1, y1, x2, y2, color):
             err += dx
             y1 += sy
 
+
 def draw_circle(renderer, cx, cy, radius, color, filled=False):
-    """
-    Draw a circle using Bresenham's circle algorithm.
-    If filled=True, fills the circle by drawing horizontal lines between edges.
-    """
+    # Draw a circle using Bresenham's circle algorithm.
+    # If filled=True, fills the circle by drawing horizontal lines between edges.
     x = 0
     y = radius
     d = 3 - 2 * radius
@@ -32,7 +32,12 @@ def draw_circle(renderer, cx, cy, radius, color, filled=False):
     while y >= x:
         if filled:
             # Fill between symmetric points
-            _draw_filled_circle_lines(renderer, cx, cy, x, y, color)
+            for xi in range(cx - x, cx + x + 1):
+                renderer.set_pixel(xi, cy + y, color)
+                renderer.set_pixel(xi, cy - y, color)
+            for xi in range(cx - y, cx + y + 1):
+                renderer.set_pixel(xi, cy + x, color)
+                renderer.set_pixel(xi, cy - x, color)
         else:
             # Outline only
             renderer.set_pixel(cx + x, cy + y, color)
@@ -44,7 +49,6 @@ def draw_circle(renderer, cx, cy, radius, color, filled=False):
             renderer.set_pixel(cx + y, cy - x, color)
             renderer.set_pixel(cx - y, cy - x, color)
 
-        # Bresenham update
         x += 1
         if d > 0:
             y -= 1
@@ -52,19 +56,9 @@ def draw_circle(renderer, cx, cy, radius, color, filled=False):
         else:
             d += 4 * x + 6
 
-
-def _draw_filled_circle_lines(renderer, cx, cy, x, y, color):
-    """Helper: draw horizontal spans between circle edges for filling."""
-    for xi in range(cx - x, cx + x + 1):
-        renderer.set_pixel(xi, cy + y, color)
-        renderer.set_pixel(xi, cy - y, color)
-    for xi in range(cx - y, cx + y + 1):
-        renderer.set_pixel(xi, cy + x, color)
-        renderer.set_pixel(xi, cy - x, color)
-
     
 def draw_rectangle(renderer, x1, y1, x2, y2, color, filled=False):
-    """Draw a rectangle from (x1, y1) to (x2, y2)."""
+    # Draw a rectangle from (x1, y1) to (x2, y2).
     if filled:
         for y in range(y1, y2 + 1):
             for x in range(x1, x2 + 1):
@@ -77,10 +71,11 @@ def draw_rectangle(renderer, x1, y1, x2, y2, color, filled=False):
             renderer.set_pixel(x1, y, color)
             renderer.set_pixel(x2, y, color)
 
+
 def draw_triangle(renderer, x1, y1, x2, y2, x3, y3, color, filled=False):
-    """Draw a triangle given by three points."""
+    # Draw a triangle given by three points.
     if filled:
-        # Simple filled triangle using horizontal lines (not optimized)
+        # Simple filled triangle using horizontal lines
         points = sorted([(x1, y1), (x2, y2), (x3, y3)], key=lambda p: p[1])
         (x1, y1), (x2, y2), (x3, y3) = points
 
@@ -107,23 +102,17 @@ def draw_triangle(renderer, x1, y1, x2, y2, x3, y3, color, filled=False):
 
 
 def draw_oval(renderer, x1, y1, x2, y2, color, filled=False):
-    """
-    Draw an oval (ellipse) using the Midpoint Ellipse Algorithm.
+    # Draw an oval (ellipse) using the Midpoint Ellipse Algorithm.
 
-    Parameters:
-        renderer: PixelRenderer instance
-        x1, y1 : top-left corner of bounding box
-        x2, y2 : bottom-right corner of bounding box
-        color  : (r, g, b)
-        filled : bool, fill the oval if True
-    """
     # Calculate radii and center
     rx = abs(x2 - x1) // 2
     ry = abs(y2 - y1) // 2
     cx = (x1 + x2) // 2
     cy = (y1 + y2) // 2
 
-    # Region 1
+    if rx == 0 or ry == 0:
+        return
+
     x = 0
     y = ry
     rx2 = rx * rx
@@ -133,7 +122,7 @@ def draw_oval(renderer, x1, y1, x2, y2, color, filled=False):
     px = 0
     py = tworx2 * y
 
-    # Decision parameter for region 1
+    # Region 1
     p1 = ry2 - (rx2 * ry) + (0.25 * rx2)
 
     while px < py:
@@ -178,6 +167,57 @@ def draw_oval(renderer, x1, y1, x2, y2, color, filled=False):
 
 
 def _draw_horizontal_line(renderer, x_start, x_end, y, color):
-    """Helper to draw a horizontal line (used for filling shapes)."""
+    # Helper to draw a horizontal line (used for filling shapes).
     for x in range(x_start, x_end + 1):
+        renderer.set_pixel(x, y, color)
+
+
+def draw_polygon(renderer, points, color, filled=False):
+    # Draw a polygon given a list of points.
+
+    if len(points) < 3:
+        return
+    
+    if filled:
+        # Scanline fill algorithm
+        min_y = min(p[1] for p in points)
+        max_y = max(p[1] for p in points)
+        
+        for y in range(min_y, max_y + 1):
+            intersections = []
+            
+            # Find intersections with polygon edges
+            for i in range(len(points)):
+                p1 = points[i]
+                p2 = points[(i + 1) % len(points)]
+                
+                if p1[1] != p2[1]:  # Not horizontal
+                    if min(p1[1], p2[1]) <= y <= max(p1[1], p2[1]):
+                        x = p1[0] + (y - p1[1]) * (p2[0] - p1[0]) // (p2[1] - p1[1])
+                        intersections.append(x)
+            
+            # Sort and fill between pairs
+            intersections.sort()
+            for i in range(0, len(intersections), 2):
+                if i + 1 < len(intersections):
+                    for x in range(intersections[i], intersections[i + 1] + 1):
+                        renderer.set_pixel(x, y, color)
+    else:
+        # Draw outline
+        for i in range(len(points)):
+            p1 = points[i]
+            p2 = points[(i + 1) % len(points)]
+            draw_line(renderer, p1[0], p1[1], p2[0], p2[1], color)
+
+
+def draw_bezier_curve(renderer, p0, p1, p2, p3, color, steps=100):
+    # Draw a cubic Bezier curve.
+    
+    for i in range(steps + 1):
+        t = i / steps
+        
+        # Cubic Bezier formula
+        x = int((1-t)**3 * p0[0] + 3*(1-t)**2*t * p1[0] + 3*(1-t)*t**2 * p2[0] + t**3 * p3[0])
+        y = int((1-t)**3 * p0[1] + 3*(1-t)**2*t * p1[1] + 3*(1-t)*t**2 * p2[1] + t**3 * p3[1])
+        
         renderer.set_pixel(x, y, color)
