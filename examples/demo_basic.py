@@ -1,17 +1,17 @@
-from pixelterm import PixelRenderer
-from pixelterm.shapes import draw_line
-import time
+from pixelterm.renderer import PixelRenderer
+import time, math
 
-r = PixelRenderer(64, 32)
-
+r = PixelRenderer(40, 20)
 try:
-    for i in range(50):
-        r.clear()
+    for i in range(100):
         for y in range(r.height):
             for x in range(r.width):
-                if (x + y + i) % r.width == 0:
-                    r.set_pixel(x, y, (255, 50, 0))
+                r.set_pixel(x, y, (
+                    int((math.sin(x/6 + i/10)+1)*127),
+                    int((math.cos(y/6 + i/10)+1)*127),
+                    100
+                ))
         r.render()
-        time.sleep(0.05)
+        time.sleep(0.03)
 finally:
     r.cleanup()
