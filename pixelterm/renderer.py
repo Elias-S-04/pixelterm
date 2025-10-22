@@ -25,18 +25,18 @@ class PixelRenderer:
     def render(self):
         """Render exactly width × height pixels, independent of terminal size."""
         if self._first_render:
-            sys.stdout.write("\033[?1049h\033[?25l\033[?7l")  # alt screen + hide cursor + disable wrap
+            sys.stdout.write("\033[?1049h\033[?25l\033[?7l")
             self._first_render = False
-    
-        sys.stdout.write("\033[H")  # move cursor to top-left
+
+        sys.stdout.write("\033[H")
         frame_lines = []
-    
-        # Build the entire frame in memory first (avoids flicker)
+
+        # Build the entire frame in memory first
         for y in range(self.height):
             row = self.buffer[y]
             line = ''.join(f"{rgb_to_ansi(r,g,b)}{self.cell}" for (r,g,b) in row)
             frame_lines.append(line + "\033[0m")
-    
+
         frame = "\n".join(frame_lines)
         sys.stdout.write(frame)
         sys.stdout.flush()
