@@ -1,5 +1,4 @@
 from pixelterm import PixelRenderer, draw_line
-import time
 
 r = PixelRenderer(32, 16)
 r.set_background((0, 0, 0))  # Black background (If no background is set, default is empty space: " ").

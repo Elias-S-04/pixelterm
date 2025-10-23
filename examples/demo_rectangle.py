@@ -1,5 +1,4 @@
 from pixelterm import PixelRenderer, draw_rectangle
-import time
 
 r = PixelRenderer(32, 16)
 try:
