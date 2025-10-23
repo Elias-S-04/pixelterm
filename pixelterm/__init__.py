@@ -26,6 +26,9 @@ from .shapes import draw_line, draw_circle, draw_rectangle, draw_triangle, draw_
 # GitHub integration
 from .githubmap import show_github_heatmap
 
+# Image tools
+from .image_tools import show_image, show_gif, show_video, convert_image_to_ascii
+
 # Version
 __version__ = "0.1.0"
 __author__ = "Elias-S-04"
@@ -40,5 +43,9 @@ __all__ = [
     "draw_oval",
     "draw_polygon",
     "draw_bezier_curve",
-    "show_github_heatmap"
+    "show_github_heatmap",
+    "show_image",
+    "show_gif",
+    "show_video",
+    "convert_image_to_ascii"
 ]

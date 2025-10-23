@@ -1,3 +1,4 @@
-Pillow>=10.0.0
 # Main package dependencies
 requests>=2.25.0
+Pillow>=9.0.0
+opencv-python>=4.5.0  # Optional, for video support
