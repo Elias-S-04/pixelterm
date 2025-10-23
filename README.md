@@ -14,6 +14,7 @@ It supports per-pixel color rendering using ANSI escape codes, shape drawing (li
 - **Drawing primitives:** lines, rectangles, and circles (filled or outlined)  
 - **Smooth animations** using an alternate terminal buffer  
 - **Tiny & dependency-free** (no external libraries required)
+- **Github contribution heatmap** rendered in terminal
 
 ---
 
