@@ -1,4 +1,4 @@
-from pixelterm.githubmap import show_github_heatmap
+from pixelterm import show_github_heatmap
 
 # Dark mode (Default)
 show_github_heatmap("Elias-s-04")
