@@ -17,6 +17,11 @@ It supports per-pixel color rendering using ANSI escape codes, shape drawing (li
 - **Github contribution heatmap** rendered in terminal
 
 ---
+## Pics
+![Nyan Cat Demo](t_nyancat.png)
+
+![Github Heatmap](ghmap.png)
+---
 
 ## Getting Started
 
