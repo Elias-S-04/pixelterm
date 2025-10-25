@@ -31,6 +31,7 @@ setup(
     keywords="terminal graphics pixel art github heatmap visualization",
     install_requires=[
         "requests>=2.25.0",
+        "Pillow>=8.0.0",
     ],
     extras_require={
         "dev": [
