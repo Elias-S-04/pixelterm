@@ -130,13 +130,23 @@ def _map_github_color_to_theme_index(github_color, github_colors, theme_colors):
 
 
 def show_github_heatmap(username, dark=True):
-    """
-    Display GitHub contribution heatmap in terminal.
+    """Display GitHub contribution heatmap in terminal."""
     
-    Args:
-        username (str): GitHub username
-        dark (bool): Use dark theme (default: True)
-    """
+    # Validate username
+    if not username or not isinstance(username, str):
+        print("Error: Invalid username")
+        return
+    
+    # Basic username validation (GitHub allows alphanumeric, hyphens)
+    import re
+    if not re.match(r'^[a-zA-Z0-9\-]+$', username):
+        print("Error: Invalid GitHub username format")
+        return
+    
+    if len(username) > 39:  # GitHub's max username length
+        print("Error: Username too long")
+        return
+    
     token = get_github_token()
     if not token:
         print("Could not get GitHub token. Try running `gh auth login` first.")

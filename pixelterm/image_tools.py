@@ -64,8 +64,19 @@ def show_image(image_path, width=64, height=32, cell="██"):
         height (int): Terminal height in characters (default: 32)
         cell (str): Character(s) to use for each pixel (default: "██")
     """
+    # Validate file path
+    if not isinstance(image_path, str):
+        print("Error: Invalid file path")
+        return
+    
+    # Prevent path traversal
+    import os.path
+    if '..' in image_path or image_path.startswith('/'):
+        print("Error: Invalid file path")
+        return
+    
     if not os.path.exists(image_path):
-        print(f"Error: Image file '{image_path}' not found.")
+        print(f"Error: Image file '{os.path.basename(image_path)}' not found.")
         return
     
     try:

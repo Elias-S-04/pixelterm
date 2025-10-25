@@ -41,3 +41,15 @@ I later plan to use this for a Raspberry Pi to HUB75 matrix renderer building on
 ```bash
 git clone https://github.com/Elias-S-04/pixelterm.git
 cd pixelterm
+```
+
+## Security
+
+- PixelTerm uses GitHub CLI authentication (`gh auth login`) - no tokens are stored
+- Image/video files are processed locally only
+- No network requests except to GitHub's public API
+- Input validation prevents malicious file paths
+
+## Reporting Security Issues
+
+Please report security vulnerabilities to [eliaslvsrs@gmail.com] or create a private GitHub issue.
