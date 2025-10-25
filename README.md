@@ -5,7 +5,7 @@ It supports per-pixel color rendering using ANSI escape codes, shape drawing (li
 
 > Think of it like `pygame`, but for your terminal window — powered by pixels made of Unicode blocks!
 
-I later plan to use this for a Raspberry Pi to HUB75 matrix renderer.
+I later plan to use this for a Raspberry Pi to HUB75 matrix renderer building on the [https://github.com/hzeller/rpi-rgb-led-matrix](rpi-rbg-led-matrix) library by [https://github.com/hzeller](hzeller).
 
 ---
 
@@ -20,6 +20,16 @@ I later plan to use this for a Raspberry Pi to HUB75 matrix renderer.
 
 ---
 ## Pics
+![Draw Lines](img/t_lines.png)
+
+![Draw Circle](img/t_circle.png)
+
+![Draw Rectangle](img/t_rectangle.png)
+
+![Draw Ellipse](img/t_ellipse.png)
+
+![Draw Triangle](img/t_triangle.png)
+
 ![Nyan Cat Demo](img/t_nyancat.png)
 
 ![Github Heatmap](img/ghmap.png)
