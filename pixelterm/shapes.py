@@ -101,8 +101,8 @@ def draw_triangle(renderer, x1, y1, x2, y2, x3, y3, color, filled=False):
         draw_line(renderer, x3, y3, x1, y1, color)
 
 
-def draw_oval(renderer, x1, y1, x2, y2, color, filled=False):
-    # Draw an oval (ellipse) using the Midpoint Ellipse Algorithm.
+def draw_ellipse(renderer, x1, y1, x2, y2, color, filled=False):
+    # Draw an ellipse using the Midpoint Ellipse Algorithm.
 
     # Calculate radii and center
     rx = abs(x2 - x1) // 2

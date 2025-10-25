@@ -21,7 +21,7 @@ Examples:
 from .renderer import PixelRenderer
 
 # Shape drawing functions
-from .shapes import draw_line, draw_circle, draw_rectangle, draw_triangle, draw_oval, draw_polygon
+from .shapes import draw_line, draw_circle, draw_rectangle, draw_triangle, draw_ellipse, draw_polygon
 
 # GitHub integration
 from .githubmap import show_github_heatmap
@@ -40,7 +40,7 @@ __all__ = [
     "draw_circle", 
     "draw_rectangle", 
     "draw_triangle",
-    "draw_oval",
+    "draw_ellipse",
     "draw_polygon",
     "show_github_heatmap",
     "show_image",
