@@ -5,6 +5,8 @@ It supports per-pixel color rendering using ANSI escape codes, shape drawing (li
 
 > Think of it like `pygame`, but for your terminal window — powered by pixels made of Unicode blocks!
 
+I later plan to use this for a Raspberry Pi to HUB75 matrix renderer.
+
 ---
 
 ## Features
@@ -18,9 +20,9 @@ It supports per-pixel color rendering using ANSI escape codes, shape drawing (li
 
 ---
 ## Pics
-![Nyan Cat Demo](t_nyancat.png)
+![Nyan Cat Demo](img/t_nyancat.png)
 
-![Github Heatmap](ghmap.png)
+![Github Heatmap](img/ghmap.png)
 ---
 
 ## Getting Started
