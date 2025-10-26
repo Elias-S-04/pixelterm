@@ -29,6 +29,9 @@ from .githubmap import show_github_heatmap
 # Image tools
 from .image_tools import show_image, show_gif, show_video
 
+# Text tools
+from .text_tools import render_text, show_text, show_multiline_text, create_text_banner, show_banner
+
 # Version
 __version__ = "0.1.0"
 __author__ = "Elias-S-04"
@@ -46,4 +49,9 @@ __all__ = [
     "show_image",
     "show_gif",
     "show_video",
+    "render_text",
+    "show_text",
+    "show_multiline_text",
+    "create_text_banner",
+    "show_banner",
 ]
