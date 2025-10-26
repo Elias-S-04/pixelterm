@@ -33,6 +33,8 @@ I later plan to use this for a Raspberry Pi to HUB75 matrix renderer building on
 ![Nyan Cat Demo](img/t_nyancat.png)
 
 ![Github Heatmap](img/ghmap.png)
+
+![Text](img/t_text.png)
 ---
 
 ## Getting Started
