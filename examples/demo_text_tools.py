@@ -18,10 +18,7 @@ show_banner("PIXELTERM", color=(255, 255, 0), scale=2, border=True, border_color
 print("\n5. Custom spacing:")
 show_text("SPACED OUT", color=(255, 128, 0), scale=1, spacing=3)
 
-print("\n6. Different colors per character (using custom renderer):")
 r = render_text("RAINBOW", color=(255, 255, 255), scale=2)
 
-# Override some pixels with different colors manually
-# This demonstrates how you can customize the rendered text
 r.render()
 r.cleanup()

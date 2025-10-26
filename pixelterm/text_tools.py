@@ -8,7 +8,7 @@ import os
 from .renderer import PixelRenderer
 
 
-# Simple 5x7 bitmap font (each character is 5 pixels wide, 7 pixels tall)
+# Simple 5x7 bitmap font
 FONT_5x7 = {
     'A': [
         "01110",
